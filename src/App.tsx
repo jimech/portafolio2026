@@ -384,7 +384,7 @@ export default function App() {
                         <div className="flex flex-col md:flex-row gap-6 md:gap-8">
                           <div className="w-full max-w-[240px] mx-auto md:mx-0 aspect-[3/4] md:w-48 md:h-64 bg-white/5 border border-white/10 relative overflow-hidden group shrink-0">
                             <img 
-                              src="PHOTO.jpg" 
+                              src="photo.jpg" 
                               alt="Profile" 
                               className="w-full h-full object-cover grayscale contrast-125 opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                               referrerPolicy="no-referrer"
