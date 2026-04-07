@@ -21,7 +21,8 @@ import { GlitchText } from './components/GlitchText';
 import { HUDFrame } from './components/HUDFrame';
 import { CyberBackground } from './components/CyberBackground';
 
-type Section = 'boot' | 'home' | 'about' | 'work' | 'education' | 'achievements' | 'contact';
+
+type Section = 'boot' | 'about' | 'work' | 'education' | 'achievements' | 'contact';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<Section>('boot');
@@ -39,7 +40,7 @@ export default function App() {
 
   useEffect(() => {
     if (bootComplete) {
-      setTimeout(() => setActiveSection('home'), 500);
+      setTimeout(() => setActiveSection('about'), 500);
     }
   }, [bootComplete]);
 
@@ -155,7 +156,7 @@ export default function App() {
                 <motion.button
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  onClick={() => setActiveSection('home')}
+                  onClick={() => setActiveSection('about')}
                   className="mt-8 w-full border border-neon-cyan/50 py-3 font-mono text-xs uppercase tracking-[0.3em] text-neon-cyan hover:bg-neon-cyan hover:text-black transition-colors border-glow-cyan"
                 >
                   Enter System
@@ -231,7 +232,6 @@ export default function App() {
               </div>
 
               <nav className="flex-1 py-4 overflow-y-auto custom-scrollbar">
-                <NavItem id="home" icon={Activity} label="Dashboard" />
                 <NavItem id="about" icon={User} label="System Profile" />
                 <NavItem id="work" icon={Briefcase} label="Work History" />
                 <NavItem id="education" icon={Cpu} label="Academic Records" />
@@ -263,15 +263,17 @@ export default function App() {
               <div className="max-w-5xl mx-auto p-4 sm:p-8 md:p-12 space-y-8 md:space-y-12">
                 
                 <AnimatePresence mode="wait">
-                  {activeSection === 'home' && (
+
+                  {activeSection === 'about' && (
                     <motion.div
-                      key="home"
+                      key="about"
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       className="space-y-8"
+
                     >
-                      <header className="space-y-2">
+                       <header className="space-y-2">
                         <h2 className="text-neon-cyan font-mono text-xs md:text-sm uppercase tracking-[0.4em]">Welcome, Operator</h2>
                         <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tighter">
                           I BUILD <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-magenta">INTELLIGENT SYSTEMS</span>
@@ -281,110 +283,11 @@ export default function App() {
                         </p>
                       </header>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <HUDFrame title="System Load" className="md:col-span-2">
-                          <div className="flex items-end space-x-2 md:space-x-4 h-24 md:h-32">
-                            {[40, 70, 45, 90, 65, 85, 30, 55, 95, 60].map((h, i) => (
-                              <motion.div 
-                                key={i}
-                                initial={{ height: 0 }}
-                                animate={{ height: `${h}%` }}
-                                transition={{ delay: i * 0.05 }}
-                                className="flex-1 bg-neon-cyan/20 border-t border-neon-cyan/50 relative group"
-                              >
-                                <div className="absolute inset-0 bg-neon-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                              </motion.div>
-                            ))}
-                          </div>
-                          <div className="mt-4 flex flex-wrap justify-between text-[8px] md:text-[10px] font-mono text-white/40 gap-2">
-                            <span>CPU_USAGE: OPTIMAL</span>
-                            <span>MEM_ALLOC: 16.4GB</span>
-                            <span>UPTIME: 99.9%</span>
-                          </div>
-                        </HUDFrame>
-
-                        <HUDFrame title="Network Traffic">
-                          <div className="h-24 md:h-32 flex items-center justify-center relative overflow-hidden">
-                            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                              <div className="w-full h-[1px] bg-neon-cyan animate-[pulse_2s_infinite]" />
-                              <div className="absolute w-full h-[1px] bg-neon-magenta rotate-45 animate-[pulse_3s_infinite]" />
-                              <div className="absolute w-full h-[1px] bg-neon-cyan -rotate-45 animate-[pulse_4s_infinite]" />
-                            </div>
-                            <div className="relative z-10 flex flex-col items-center">
-                              <div className="text-[10px] font-mono text-neon-cyan mb-1">DATA_STREAM_01</div>
-                              <div className="flex space-x-1">
-                                {[...Array(5)].map((_, i) => (
-                                  <motion.div
-                                    key={i}
-                                    animate={{ 
-                                      height: [4, 12, 8, 16, 4],
-                                      opacity: [0.3, 1, 0.5, 1, 0.3]
-                                    }}
-                                    transition={{ 
-                                      duration: 1.5, 
-                                      repeat: Infinity, 
-                                      delay: i * 0.2 
-                                    }}
-                                    className="w-1 bg-neon-cyan"
-                                  />
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="mt-4 text-[8px] font-mono text-white/40 text-center">
-                            ENCRYPTED_TUNNEL: ACTIVE
-                          </div>
-                        </HUDFrame>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <HUDFrame title="Recent Missions">
-                          <div className="space-y-4">
-                            {[
-                              { title: 'TO BE UPDATED', tech: '-' },
-                              { title: 'TO BE UPDATED', tech: '-' }
-                            ].map((p) => (
-                              <div key={p.title} className="group cursor-pointer border-b border-white/5 pb-3 last:border-0">
-                                <div className="flex justify-between items-center mb-1">
-                                  <h3 className="text-sm font-bold group-hover:text-neon-cyan transition-colors">{p.title}</h3>
-                                  <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </div>
-                                <p className="text-[10px] font-mono text-white/40 uppercase">{p.tech}</p>
-                              </div>
-                            ))}
-                          </div>
-                        </HUDFrame>
-                        <HUDFrame title="Security Status">
-                          <div className="flex items-center justify-center h-full py-4">
-                            <div className="relative">
-                              <Shield size={48} className="md:size-64 text-neon-cyan/20" />
-                              <motion.div 
-                                animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="absolute inset-0 flex items-center justify-center"
-                              >
-                                <Cpu size={24} className="md:size-32 text-neon-cyan" />
-                              </motion.div>
-                            </div>
-                          </div>
-                        </HUDFrame>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {activeSection === 'about' && (
-                    <motion.div
-                      key="about"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      className="space-y-8"
-                    >
                       <HUDFrame title="Subject Profile">
                         <div className="flex flex-col md:flex-row gap-6 md:gap-8">
                           <div className="w-full max-w-[240px] mx-auto md:mx-0 aspect-[3/4] md:w-48 md:h-64 bg-white/5 border border-white/10 relative overflow-hidden group shrink-0">
                             <img 
-                              src="photo.jpg" 
+                              src="/photo.jpg" 
                               alt="Profile" 
                               className="w-full h-full object-cover grayscale contrast-125 opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
                               referrerPolicy="no-referrer"
@@ -396,9 +299,8 @@ export default function App() {
                             <div>
                               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tighter mb-2">OPERATOR_ID: JIMENA_CHINCHILLA</h2>
                               <p className="text-white/60 text-xs sm:text-sm md:text-base leading-relaxed">
-                                Artificial Intelligence student and Software Engineer focused on building scalable intelligent systems and machine learning infrastructure. My work combines strong foundations in mathematics, algorithms, and software engineering with practical experience in AI development.
-My professional experience includes developing automation and process optimization solutions. I also contributed to a research contract with BMW, developing computer vision pipelines for wildlife detection on roadways. This work involved training and evaluating deep learning models for object detection, experimenting with convolutional neural networks, and designing real-time perception workflows aimed at improving road safety.
-I also completed a software engineering internship at Snowflake, where I worked on backend systems and data infrastructure, contributing to internal tools and services that supported large-scale data processing workflows. Across my academic and professional work, I have built 35+ projects involving machine learning models, algorithm development, and intelligent system design.
+                               Artificial Intelligence student and Software Engineer focused on building scalable intelligent systems and machine learning infrastructure. My work combines strong foundations in mathematics, algorithms, and software engineering with practical experience in AI development.
+My professional experience includes developing automation and process optimization solutions. I also contributed to a research contract with BMW, developing computer vision pipelines for wildlife detection on roadways.  Across my academic and professional work, I have built 25+ projects involving machine learning models, algorithm development, and intelligent system design
                               </p>
                             </div>
                             <div className="grid grid-cols-2 gap-4 text-left">
@@ -483,26 +385,27 @@ I also completed a software engineering internship at Snowflake, where I worked 
                       <div className="space-y-6">
                         {[
                           {
-                            company: 'SNOWFLAKE INC - Berlin, Germany',
-                            role: 'Software Engineer Intern',
-                            period: 'Oct 2025- Feb 2026 (16-Weeks Contract)',
-                            desc: 'I worked on backend systems and data infrastructure, contributing to internal tools and services that supported large-scale data processing workflows. My work involved improving system reliability, writing scalable backend components, and collaborating with engineers on performance optimization and distributed data handling.',
-                            points: ['Java', 'DevOps', 'Kubernetes']
+                            company: 'Freelance Software Engineer',
+                            role: 'Machine learning engineer',
+                            period: 'Present',
+                            desc: 'I independently offer AI and algorithm development services to multiple clients on a contract basis. I have complete several automatizations and projects in the industry of logistics, commerce and technology.',
+                            points: ['Python', 'Deep leaning', 'Computer Vision','Machine Learning']
                           },
+            
                           {
-                            company: 'BAYERISCHE MOTOREN WERKE (BMW) - Munich, Germany',
-                            role: 'Research Working Student - Computer Vision and Deep Learning',
-                            period: 'Mar 2024 - Oct 2024',
-                            desc: 'Developed real-time computer vision detection pipelines for wildlife hazard identification on roadways. Trained and optimized CNN-based object detection models for environmental perception tasks. Help building data preprocessing and training pipelines for large-scale image datasets.',
-                            points: ['Python', 'PyTorch / TensorFlow', 'CNNs', 'Computer Vision Pipelines']
+                            company: 'Bayerische Motoren Werke (BMW) - Munich, Germany',
+                            role: 'Computer Vision Research Engineer Intern (Contract)',
+                            period: 'Mar 2024 - Aug 2024',
+                            desc: 'Help to built and evaluated image processing and model inference workflows for real-time environmental perception. Designed and trained deep learning object detection models using convolutional neural networks (CNNs).',
+                            points: ['Python', 'Deep leaning', 'Computer Vision','Machine Learning']
                           },
-                          {
+                           {
                             company: 'AMHERST INC - San Jose, Costa Rica',
-                            role: 'Continuous Improvement Specialist',
+                            role: 'Automation / Continuous Improvement Engineer',
                             period: 'Jun 2022 - Mar 2023',
                             desc: 'Collaborated with cross-functional teams to digitize and optimize internal processes, improving operational efficiency and system reliability. Built script-based automation tools for email handling, system updates, and data processing tasks.',
-                            points: ['Python', 'Workflow Automation', 'Scripting']
-                          }
+                            points: ['Python', 'Workflow Automation', 'Scripting', 'Process Optimization']
+                          },
                           
                         ].map((exp, i) => (
                           <HUDFrame key={i} title={`Log_Entry #${(3-i).toString().padStart(2, '0')}`}>
@@ -539,11 +442,11 @@ I also completed a software engineering internship at Snowflake, where I worked 
                       <div className="space-y-6">
                         {[
                           {
-                            school: 'TECHNISCHE_UNIVERSITAT MUNCHEN',
+                            school: 'TECHNISCHE_HOCHSCHULE DEGGENDORF',
                             degree: 'B.S. in Artificial Intelligence',
-                            period: 'Sep 2023 – 2026 (Expected Graduation: 2026)',
+                            period: 'Sep 2023 – 2026 (Expected Graduation: 2027)',
                             desc: 'Technical Focus: Machine Learning • Mathematics • Algorithms & Data Structures • Computer Vision • Robotics • Natural Language Processing',
-                            gpa: '1.3/1.8'
+                            gpa: '1.8/2.7'
                           },
                           {
                             school: 'UNIVERSIDAD_LATINA DE COSTA RICA',
@@ -605,9 +508,11 @@ I also completed a software engineering internship at Snowflake, where I worked 
                         <HUDFrame title="Hackathon_Records">
                           <div className="space-y-4">
                             {[
-                              { name: 'Google_Gemini 3 Hackathon: FemTech', rank: '2nd Place', year: '2024' },
-                              { name: 'hackaTUM', rank: 'Participant', year: '2025' },
-                              { name: 'hackaTUM', rank: '8th Place', year: '2024' }
+                              { name: 'Google_Gemini 3 Hackathon: FemTech', rank: '3th Place', year: '2025' },
+                               { name: 'HackaTUM', rank: 'Participant', year: '2025' },
+                                { name: 'HackaTUM', rank: 'Participant', year: '2024' },
+                              { name: 'hackaton_Universidad de Costa rica', rank: 'Participant', year: '2023' },
+                            
                             ].map((hack, i) => (
                               <div key={i} className="border-b border-white/5 pb-3 last:border-0">
                                 <h3 className="text-sm font-bold text-neon-magenta">{hack.name}</h3>
@@ -624,7 +529,8 @@ I also completed a software engineering internship at Snowflake, where I worked 
                         <HUDFrame title="Achievements & Clubs ">
                           <div className="space-y-4">
                             {[
-                              { name: 'TUM.ai', role: 'Student Member', period: '2023 - Present' },
+                               { name: 'United AI', role: 'Student Member', period: 'Present' },
+                              { name: 'Latin America: 2018 Robotics Competition ', role: '3th Place: Group Project', period: '2018' },
                               { name: 'Canguro Matemático: Math competition', role: 'Top 100 National Performance', period: '2015' },
                              
                             ].map((club, i) => (
@@ -643,7 +549,7 @@ I also completed a software engineering internship at Snowflake, where I worked 
                       <HUDFrame title="Technical_Achievements">
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           {[
-                            { label: 'GITHUB_CONTRIBUTIONS', val: '100+' },
+                            { label: 'GITHUB_CONTRIBUTIONS', val: '' },
                             { label: 'STARS_EARNED', val: '1.2k' },
                             { label: 'SYSTEM_UPTIME', val: '99.9%' }
                           ].map(item => (
